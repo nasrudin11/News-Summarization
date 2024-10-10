@@ -101,7 +101,7 @@ if st.button("Proses Teks"):
         st.write(closeness_centrality_df)
 
         # Mengambil kalimat berdasarkan Closeness Centrality tertinggi
-        st.write("Kalimat yang Paling Menonjol Berdasarkan Closeness Centrality:")
+        st.write("Kalimat Rangkuman Berdasarkan Closeness Centrality:")
         top_three_closeness = closeness_centrality_df.head(3)
         top_node_closeness = top_three_closeness['Node'].apply(lambda x: int(x))
 
