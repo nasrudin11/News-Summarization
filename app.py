@@ -105,9 +105,9 @@ if st.button("Proses Teks"):
         top_three_closeness = closeness_centrality_df.head(3)
         top_node_closeness = top_three_closeness['Node'].apply(lambda x: int(x))
 
-        # Tampilkan kalimat yang sesuai dengan node-node teratas
-        extracted_sentences = [berita_tokenized[node_index] for node_index in top_node_closeness if 0 <= node_index < len(berita_tokenized)]
-        for idx, sentence in enumerate(extracted_sentences):
-            st.write(f"K{idx}: {sentence}")
+       # Tampilkan kalimat yang sesuai dengan node-node teratas berdasarkan indeks asli
+        for node_index in top_node_closeness:
+            if 0 <= node_index < len(berita_tokenized): 
+                st.write(f"Kalimat {node_index}: {berita_tokenized[node_index]}")
     else:
         st.warning("Masukkan teks terlebih dahulu!")
