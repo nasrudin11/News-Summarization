@@ -55,20 +55,37 @@ def compute_tfidf_and_similarity(sentences_no_stopwords):
 def create_graph(cosine_sim, sentences):
     threshold = 0.2
     adjacency = (cosine_sim > threshold).astype(int)
-    
-    # Gunakan `from_numpy_array` untuk versi terbaru networkx
-    G_adj = nx.from_numpy_array(adjacency)
 
-    plt.figure(figsize=(8, 6))
-    pos = nx.shell_layout(G_adj)
-    nx.draw(G_adj, pos, with_labels=True, edge_color='black', node_color="skyblue", node_size=1000)
+    # Buat graf baru
+    G = nx.Graph()
+
+    # Tambahkan node (kalimat)
+    for i in range(len(adjacency)):
+        G.add_node(i)
+
+    # Tambahkan edge (hubungan) antara kalimat berdasarkan matriks adjensi
+    for i in range(len(adjacency)):
+        for j in range(len(adjacency)):
+            similarity = adjacency[i][j]  # Ambil nilai dari matriks adjacency
+            if similarity > 0 and i != j:  # Hanya tambahkan edge jika similarity lebih besar dari 0
+                G.add_edge(i, j, weight=similarity)
+
+    # Visualisasikan grafik dengan tata letak "circular"
+    pos = nx.circular_layout(G)
+
+    # Membuat label node yang hanya menggunakan nomor indeks
+    labels = {i: f'K {i}' for i in G.nodes()}
+
+    plt.figure(figsize=(6, 6))
+    nx.draw(G, pos, with_labels=True, labels=labels, node_size=900, node_color='skyblue', edge_color='gray')
     plt.title('Graf Hubungan Kalimat Berdasarkan Matriks Adjacency')
-    st.pyplot(plt)
+    st.pyplot(plt)  # Gunakan Streamlit untuk menampilkan grafik
 
-    closeness_centrality = nx.closeness_centrality(G_adj)
+    closeness_centrality = nx.closeness_centrality(G)
     closeness_centrality_df = pd.DataFrame(list(closeness_centrality.items()), columns=['Node', 'Closeness Centrality'])
     closeness_centrality_df = closeness_centrality_df.sort_values(by='Closeness Centrality', ascending=False)
     return closeness_centrality_df
+
 
 # Streamlit app
 st.title("Analisis Teks Berbasis TF-IDF dan Graf")
