@@ -1,10 +1,10 @@
-import streamlit as st
 import numpy as np
 import pandas as pd
 import nltk
 import re
 import networkx as nx
 import matplotlib.pyplot as plt
+import streamlit as st
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -51,7 +51,9 @@ def compute_tfidf_and_similarity(sentences_no_stopwords):
 def create_graph(cosine_sim, sentences):
     threshold = 0.2
     adjacency = (cosine_sim > threshold).astype(int)
-    G_adj = nx.from_numpy_matrix(adjacency)
+    
+    # Gunakan `from_numpy_array` untuk versi terbaru networkx
+    G_adj = nx.from_numpy_array(adjacency)
 
     plt.figure(figsize=(8, 6))
     pos = nx.shell_layout(G_adj)
