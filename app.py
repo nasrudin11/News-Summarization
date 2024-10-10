@@ -11,6 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Download NLTK stopwords
+nltk.download('punkt')
 nltk.download('stopwords')
 
 # Fungsi untuk memproses teks
