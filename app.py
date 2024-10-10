@@ -88,7 +88,7 @@ def create_graph(cosine_sim, sentences):
 
 
 # Streamlit app
-st.title("Analisis Teks Berbasis TF-IDF dan Graf")
+st.title("Text Summarization Berbasis Graf dan Closeness Centrality")
 
 # Input teks dari form
 input_text = st.text_area("Masukkan Teks yang Ingin Dianalisis", height=200)
