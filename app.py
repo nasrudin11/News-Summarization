@@ -23,12 +23,15 @@ def process_text(text):
     text_cleaned = re.sub(r'[^\w\s.]', '', text_lower)
     text_cleaned = text_cleaned.replace('\n', ' ')
 
+    # Tambahkan langkah untuk menghapus 'kompas.com' dari teks sebelum tokenisasi
+    text_cleaned = re.sub(r'kompas.com', '', text_cleaned)
+
     # Tokenisasi kalimat
     sentences = sent_tokenize(text_cleaned)
 
     # Hapus stopwords
     stop_words = set(stopwords.words('indonesian'))
-    custom_stopwords = {'kompas.com'}
+    custom_stopwords = {'kompas.com'}  # Mungkin tidak diperlukan lagi jika sudah dihapus sebelumnya
     stop_words.update(custom_stopwords)
 
     sentences_no_stopwords = []
@@ -39,6 +42,7 @@ def process_text(text):
         sentences_no_stopwords.append(cleaned_sentence)
 
     return sentences_no_stopwords, sentences
+
 
 # Fungsi untuk menghitung TF-IDF dan cosine similarity
 def compute_tfidf_and_similarity(sentences_no_stopwords):
